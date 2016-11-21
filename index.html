@@ -4,6 +4,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NYSL App</title>
   <link rel="stylesheet" href="/assets/styles/reset.css">
@@ -50,7 +51,7 @@
     
         <ul>
           <li>
-           <form action="select_results.html" method="get">
+           <form action="schedule.html" method="get">
               <select id="select-by-team" name="teamname">
                 <option value="" selected disabled>By Team</option>
                 <option value="f.c.paulaner">F.C. Paulaner</option>
@@ -62,7 +63,7 @@
           </li>
           
           <li>
-           <form id="date-form" action="select_results.html"  method="get">
+           <form id="date-form" action="schedule.html"  method="get">
               <select id="select-by-date" name="matchdate">
                 <option value="" selected disabled>By Date</option>
                 <option value="22/12/2016">22/12/2016</option>
@@ -74,7 +75,7 @@
             </form>
           </li>
           <li>
-            <form action="select_results.html">
+            <form action="schedule.html">
               <button name="viewall" value="all">View all</button>
             </form>
 <!--NOTE cannot put everything in one form as it causes conflicts-->
