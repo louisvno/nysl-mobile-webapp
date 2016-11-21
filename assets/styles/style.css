@@ -103,8 +103,8 @@ h1 {
   }
 
 #map-container{
-  height: 150px;
-  background-color: palegreen;
+/*  height: 150px;*/
+/*  background-color: palegreen;*/
   margin-bottom: 0px;
 }
 
@@ -131,3 +131,7 @@ select {
 
 }
 
+footer {
+  padding-top: 15px;
+  padding-bottom:15px;
+}
