@@ -1,0 +1,15 @@
+<script type="text/html" id="game-detail-template">
+  <section class="game-card">
+      <header class="game-card-header">
+        <h3>{{hometeam}} - {{awayteam}}</h3>
+      </header>
+      <ul class="game-details">
+        <li>Date: {{match_date}}</li>
+        <li>Match start: {{match_time}}</li>
+        <li>Location: {{match_location}}</li>
+      </ul>
+      <div id="map-container">
+        <iframe src={{map_link}} width="100%" height="400px" frameborder="0" style="border:0"></iframe>
+      </div>
+    </section>
+</script> 
