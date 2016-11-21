@@ -57,11 +57,19 @@ h1 {
 .main-content, #right-content, #left-content {
   text-align: center;
   min-height: 480px;
-  max-width: 600px;
-  margin:auto;
+/*  max-width: 600px;*/
+/*  margin:auto;*/
   margin-top:60px;
   padding-top: 15px;
 }
+
+#left-content {
+}
+
+#right-content {
+  display: none;
+}
+
 .main-content h1 {
   padding-top:15px;
 }
@@ -70,6 +78,8 @@ h1 {
   display: block;
   margin-top:15px;
 }
+
+
 
 #logo {
   height:70px;
@@ -134,4 +144,18 @@ select {
 footer {
   padding-top: 15px;
   padding-bottom:15px;
+}
+
+@media screen and (orientation:landscape) {
+  #left-content {
+  float :left;
+  width:33.33%;
+  }
+
+  #right-content {
+    display:block;
+    float:right;
+    width:66.6666%;
+  }
+  
 }
