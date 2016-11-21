@@ -54,7 +54,7 @@ h1 {
     text-align: right;
   }
 
-.main-content {
+.main-content, #right-content, #left-content {
   text-align: center;
   min-height: 480px;
   max-width: 600px;

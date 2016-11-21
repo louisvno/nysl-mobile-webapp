@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NYSL</title>
+  <link rel="stylesheet" href="/assets/styles/reset.css">
+  <link rel="stylesheet" href="/assets/styles/style.css">
+<!-- [x] TODO add meta tag view scale 1.0-->
+</head>
+
+<body>
+  <header class="page-header">
+    <div class="header-wrapper">
+      <a href="index.html" id="back-button" ><img src="assets/images/return-no-tail-3px.svg"></a>
+      <h1>Schedule</h1>
+      <div class="align-item"></div>
+    </div>
+  </header>
+  
+  <section id="left-content">
+    <section class="game-card">
+      <header class="game-card-header">
+        <h3>22-12-2016</h3>
+      </header>
+      <form action="game_details.html" method="get">
+        <ul>
+          <li>
+            <button name="matchcode" value="20163">F.C. Steinburg - F.C. Volldamm </button>
+          </li>
+          <li>
+            <button name="matchcode" value="20169">F.C. Schultenbrau - F.C. Paulaner</button>
+          </li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="game-card">
+      <div class="game-card-header">
+        <h3>29-12-2016</h3>
+      </div>
+      <form action="game_details.html" method="get">
+        <ul>
+          <li>
+            <button name="matchcode" value="20164">F.C. Barcelona - PSV Einhoven</button>
+          </li>
+          <li>
+            <button name="matchcode" value="20165">F.C. Schultenbrau - F.C. Paulaner</button>
+          </li>
+        </ul>
+      </form>
+    </section>
+        
+    <section class="find-matches">
+      <h1>View</h1>
+    
+        <ul>
+          <li>
+           <form action="schedule.html" method="get">
+              <select id="select-by-team" name="teamname">
+                <option value="" selected disabled>By Team</option>
+                <option value="f.c.paulaner">F.C. Paulaner</option>
+                <option value="f.c.schultenbrau">F.C. Schultenbrau</option>
+                <option value="f.c.steinburg">F.C. Steinburg</option>
+                <option value="f.c.volldamm">F.C. Voldamm</option>
+              </select>
+            </form>
+          </li>
+          
+          <li>
+           <form id="date-form" action="schedule.html"  method="get">
+              <select id="select-by-date" name="matchdate">
+                <option value="" selected disabled>By Date</option>
+                <option value="22/12/2016">22/12/2016</option>
+                <option value="29/12/2016">29/12/2016</option>
+                <option value="08/01/2017">08/01/2017</option>
+                <option value="15/01/2017">15/01/2017</option>
+                <option value="22/01/2017">22/01/2017</option>
+              </select>
+            </form>
+          </li>
+          <li>
+            <form action="schedule.html">
+              <button name="viewall" value="all">View all</button>
+            </form>
+<!--NOTE cannot put everything in one form as it causes conflicts-->
+          </li>
+        </ul>
+      </section>
+      
+  </section>
+  
+  <section id="right-content">
+    <section class="game-card">
+      <header class="game-card-header">
+        <h3>F.C. Steinburg - F.C. Voldamm</h3>
+      </header>
+      <ul class="game-details">
+        <li>Date: 22-12-2016</li>
+        <li>Match start: 12:00</li>
+        <li>Location: AJ Katzemeier</li>
+      </ul>
+      <div id="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11972.865782886653!2d2.15484835!3d41.3911056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a291baef8eef%3A0x57ed6ec0724e2cbc!2zUHJvdmVuw6dh!5e0!3m2!1sen!2ses!4v1479723634888" width="100%" height="400px" frameborder="0" style="border:0"></iframe>
+      </div>
+    </section>
+    
+  </section>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="assets/scripts/main.js"></script>
+</body>
+  
+</html>
