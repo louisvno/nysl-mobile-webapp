@@ -25,7 +25,7 @@ h1 {
 }
 .page-header {
   background-color: #033949;
-  min-height: 60px;
+  height: 60px;
   position:fixed;
   top:0;
   width:100%;
@@ -54,19 +54,19 @@ h1 {
     text-align: right;
   }
 
-.main-content, #right-content, #left-content {
+.main-content, #right-panel, #left-panel {
   text-align: center;
-  min-height: 480px;
+/*  min-height: 480px;*/
 /*  max-width: 600px;*/
 /*  margin:auto;*/
-  margin-top:60px;
+/*  margin-top:60px;*/
   padding-top: 15px;
 }
 
-#left-content {
+#left-panel {
 }
 
-#right-content {
+#right-panel {
   display: none;
 }
 
@@ -95,6 +95,7 @@ h1 {
   margin-bottom: 0px;
   padding-bottom: 15px;
   box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5); 
+  box-sizing: border-box;
 }
 
 .game-card-header {
@@ -140,22 +141,32 @@ select {
   color:#033949;
 
 }
-
+.find-matches{
+  box-sizing: border-box;
+}
 footer {
   padding-top: 15px;
   padding-bottom:15px;
 }
 
 @media screen and (orientation:landscape) {
-  #left-content {
-  float :left;
+  #left-panel {
   width:33.33%;
+  box-sizing: border-box;
+  top:60px;
+  height:calc(100% - 60px);
+  position:fixed;
+  overflow-y:scroll;
   }
 
-  #right-content {
+  #right-panel {
     display:block;
-    float:right;
-    width:66.6666%;
+    width: 66.6666%;
+    top: 60px;
+    height: calc(100% - 60px);
+    position: fixed;
+    overflow-y: scroll;
+    margin-left:33.33%;
   }
   
 }
