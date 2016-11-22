@@ -1,7 +1,11 @@
+html {
+  height: 100%;
+}
+
 body {
   font-family: arial;
   background-color: #e2e2e2;
-
+  min-height:100%
 }
 
 .game-card, ul, #map-container,.find-matches{
@@ -56,6 +60,8 @@ h1 {
 .main-content, #right-panel, #left-panel {
   text-align: center;
   margin-top:75px;
+
+  
 }
 
 #right-panel {
@@ -133,6 +139,23 @@ select {
 footer {
   padding-top: 15px;
   padding-bottom:15px;
+}
+
+#filter-menu{
+    top: 60px;
+    z-index: 999;
+    background-color: rgba(3,57,73,0.7);
+    position:fixed;
+    height: 100%;
+    width:100%;
+    display:none;
+}
+
+#close-button {
+  position:absolute;
+  right:30px;
+  top: 5px;
+  color:white;
 }
 
 @media screen and (orientation:landscape) {

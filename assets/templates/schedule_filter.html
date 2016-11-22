@@ -1,0 +1,36 @@
+<section class="find-matches">
+      <h1>View</h1>
+    
+        <ul>
+          <li>
+           <form action="schedule.html" method="get">
+              <select id="select-by-team" name="teamname">
+                <option value="" selected disabled>By Team</option>
+                <option value="f.c.paulaner">F.C. Paulaner</option>
+                <option value="f.c.schultenbrau">F.C. Schultenbrau</option>
+                <option value="f.c.steinburg">F.C. Steinburg</option>
+                <option value="f.c.volldamm">F.C. Voldamm</option>
+              </select>
+            </form>
+          </li>
+          
+          <li>
+           <form id="date-form" action="schedule.html"  method="get">
+              <select id="select-by-date" name="matchdate">
+                <option value="" selected disabled>By Date</option>
+                <option value="22/12/2016">22/12/2016</option>
+                <option value="29/12/2016">29/12/2016</option>
+                <option value="08/01/2017">08/01/2017</option>
+                <option value="15/01/2017">15/01/2017</option>
+                <option value="22/01/2017">22/01/2017</option>
+              </select>
+            </form>
+          </li>
+          <li>
+            <form action="schedule.html">
+              <button name="viewall" value="all">View all</button>
+            </form>
+<!--NOTE cannot put everything in one form as it causes conflicts-->
+          </li>
+        </ul>
+</section>

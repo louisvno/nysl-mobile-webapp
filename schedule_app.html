@@ -14,47 +14,16 @@
 <body>
   <header class="page-header">
     <div class="header-wrapper">
-      <a href="index.html" id="back-button" ><img src="assets/images/return-no-tail-3px.svg"></a>
+<!--      <a href="index.html" id="back-button" ><img src="assets/images/return-no-tail-3px.svg"></a>-->
+      <a href="#" id="filter-button" >toggle-filter</a>
       <h1>Schedule</h1>
       <div class="align-item"></div>
     </div>
   </header>
-  <div id="left-panel">
-    <section class="game-card">
-      <header class="game-card-header">
-        <h3>22-12-2016</h3>
-      </header>
-      <form action="game_details.html" method="get">
-        <ul>
-          <li>
-            <button name="matchcode" value="20163">F.C. Steinburg - F.C. Volldamm </button>
-          </li>
-          <li>
-            <button name="matchcode" value="20169">F.C. Schultenbrau - F.C. Paulaner</button>
-          </li>
-        </ul>
-      </form>
-    </section>
-    
-    <section class="game-card">
-      <div class="game-card-header">
-        <h3>29-12-2016</h3>
-      </div>
-      <form action="game_details.html" method="get">
-        <ul>
-          <li>
-            <button name="matchcode" value="20164">F.C. Barcelona - PSV Einhoven</button>
-          </li>
-          <li>
-            <button name="matchcode" value="20165">F.C. Schultenbrau - F.C. Paulaner</button>
-          </li>
-        </ul>
-      </form>
-    </section>
-        
-    <section class="find-matches">
+  
+  <div id="filter-menu">
+      <section class="find-matches">
       <h1>View</h1>
-    
         <ul>
           <li>
            <form action="schedule.html" method="get">
@@ -88,7 +57,43 @@
           </li>
         </ul>
       </section>
-      
+  </div>
+  
+  
+  <div id="left-panel">
+    <section class="game-card">
+      <header class="game-card-header">
+        <h3>22-12-2016</h3>
+      </header>
+      <form action="game_details.html" method="get">
+        <ul>
+          <li>
+            <button name="matchcode" value="20163">F.C. Steinburg - F.C. Volldamm </button>
+          </li>
+          <li>
+            <button name="matchcode" value="20169">F.C. Schultenbrau - F.C. Paulaner</button>
+          </li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="game-card">
+      <div class="game-card-header">
+        <h3>29-12-2016</h3>
+      </div>
+      <form action="game_details.html" method="get">
+        <ul>
+          <li>
+            <button name="matchcode" value="20164">F.C. Barcelona - PSV Einhoven</button>
+          </li>
+          <li>
+            <button name="matchcode" value="20165">F.C. Schultenbrau - F.C. Paulaner</button>
+          </li>
+        </ul>
+      </form>
+    </section>
+        
+    
   </div>
   
   <div id="right-panel">
@@ -105,7 +110,6 @@
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11972.865782886653!2d2.15484835!3d41.3911056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a291baef8eef%3A0x57ed6ec0724e2cbc!2zUHJvdmVuw6dh!5e0!3m2!1sen!2ses!4v1479723634888" width="100%" height="400px" frameborder="0" style="border:0"></iframe>
       </div>
     </section>
-    
   </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
