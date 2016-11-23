@@ -23,14 +23,12 @@ function setFilterMenuEvents () {
         var href = $(this).attr("href");
         //prevent default link behaviour
         event.preventDefault();
-
         setUrl (href);
-        
         closeFilterMenu();
         //TODO [x] sort and filter data
-        var filteredData = getFilteredData(href);
+        var filteredData = filterByTeam(href);
         //TODO get template (maybe can load all at once)
-        $.get("assets/templates/schedule_card_template", function (template) {
+        $.get("/assets/templates/schedule_card_template.html", function (template) {
             //render filter menu content
             renderTemplate(template, filteredData, "#left-panel" );
         });
@@ -38,14 +36,17 @@ function setFilterMenuEvents () {
     });
 }
 
+//getURL 
+
+
 //function to change the url
-function setUrl (parameter) {
-    var url = "?team=" + parameter;
+function setUrl (href) {
+    var url =  href; //  /schedule/ +
     history.pushState(null,null, url)
 }
 
 //Function to get the matches of the selected team from the leagueData object 
-function getFilteredData (value) {
+function filterByTeam (value) {
     
     var filteredData;
     filteredData = leagueData.matches.filter( function (i) {
