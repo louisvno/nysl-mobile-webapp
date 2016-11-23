@@ -21,37 +21,8 @@
   </header>
   
   <div id="filter-menu">
-<!--
-      <section class="find-matches">
-      <h1>View</h1>
-        <ul>
-          <li>
-             <ul>
-                 <li>By team</li>
-                 <li><a href="F.C.Barcelona">F.C.Barcelona</a></li>
-                 <li><a href="F.C.Barcelona">F.C.Barcelona</a></li>
-                 <li><a href="F.C.Barcelona">F.C.Barcelona</a></li>
-                 <li><a href="F.C.Barcelona">F.C.Barcelona</a></li>
-              </ul>
-          </li>
-          
-          <li>
-               <ul>
-                 <li>By Date</li>
-                 <li><a href="22-12-2016">22/12/2016</a></li>
-                 <li><a href="29-12-2016">29/12/2016</a></li>
-                 <li><a href="08-01-2017">08/01/2017</a></li>
-                 <li><a href="15-01-2017">15/01/2017</a></li>
-                 <li><a href="22-01-2017">22/01/2017</a></li>
-              </ul>
-          <li>
-            <a href="all">View All</a>
-          </li>
-        </ul>
-      </section>
--->
+  <!--filled by schedule_filter_template template-->
   </div>
-  
   
   <div id="left-panel">
     <section class="game-card">
@@ -60,10 +31,10 @@
       </header>
         <ul>
           <li>
-          <a href="#schedule/matchId">F.C. Steinburg - F.C. Volldamm </a>
+            <a href="#schedule/matchId">F.C. Steinburg - F.C. Volldamm </a>
           </li>
           <li>
-          <a href="#schedule/matchId">F.C. Schultenbrau - F.C. Paulaner</a>
+            <a href="#schedule/matchId">F.C. Schultenbrau - F.C. Paulaner</a>
           </li>
         </ul>
     </section>
@@ -73,12 +44,12 @@
         <h3>29-12-2016</h3>
       </div>
       <ul>
-          <li>
-            <a href="#schedule/matchId">F.C. Steinburg - F.C. Volldamm</a>
-          </li>
-          <li>
-            <a href="#schedule/matchId">F.C. Schultenbrau - F.C. Paulaner</a>
-          </li>
+        <li>
+          <a href="#schedule/matchId">F.C. Steinburg - F.C. Volldamm</a>
+        </li>
+        <li>
+          <a href="#schedule/matchId">F.C. Schultenbrau - F.C. Paulaner</a>
+        </li>
       </ul>
     </section>
         
@@ -103,15 +74,18 @@
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
-  <script src="assets/scripts/main.js"></script>
   <script src="assets/scripts/template_function.js"></script>
   <script src="assets/scripts/matches.js"></script>
+  <script src="assets/scripts/main.js"></script>
   
   <script> 
-  console.log("hello");
+  //document ready render the filter menu from the data with mustache
     $(function() {
         $.get("assets/templates/schedule_filter_template.html", function(template){
-          renderTemplate(template, leagueData, "#filter-menu" );
+            //render filter menu content
+            renderTemplate(template, leagueData, "#filter-menu" );
+            //add event listeners
+            setFilterMenuEvents();
         })
     });
   </script>

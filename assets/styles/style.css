@@ -160,7 +160,9 @@ footer {
    text-decoration: none;
 }
 
-#filter-menu h1,li {
+#filter-menu h1{
+    color:white;
+}#filter-menu li{
     color:white;
 }
 
