@@ -8,48 +8,48 @@
   <title>NYSL</title>
   <link rel="stylesheet" href="/assets/styles/reset.css">
   <link rel="stylesheet" href="/assets/styles/style.css">
-<!-- [x] TODO add meta tag view scale 1.0-->
 </head>
 
 <body>
   <header class="page-header">
     <div class="header-wrapper">
 <!--      <a href="index.html" id="back-button" ><img src="assets/images/return-no-tail-3px.svg"></a>-->
-      <span id="filter-button" >toggle-filter</span>
+      <span style="color:white" id="filter-button" >toggle-filter</span>
       <h1>Schedule</h1>
       <div class="align-item"></div>
     </div>
   </header>
   
   <div id="filter-menu">
+<!--
       <section class="find-matches">
       <h1>View</h1>
         <ul>
           <li>
              <ul>
-                 <li><a href="">By team</a></li>
-                 <li><a href="#schedule/F.C.Barcelona">F.C.Barcelona</a></li>
-                 <li><a href="#schedule/F.C.Barcelona">F.C.Barcelona</a></li>
-                 <li><a href="#schedule/F.C.Barcelona">F.C.Barcelona</a></li>
-                 <li><a href="#schedule/F.C.Barcelona">F.C.Barcelona</a></li>
-                 <li><a href="#schedule/F.C.Barcelona">F.C.Barcelona</a></li>
+                 <li>By team</li>
+                 <li><a href="F.C.Barcelona">F.C.Barcelona</a></li>
+                 <li><a href="F.C.Barcelona">F.C.Barcelona</a></li>
+                 <li><a href="F.C.Barcelona">F.C.Barcelona</a></li>
+                 <li><a href="F.C.Barcelona">F.C.Barcelona</a></li>
               </ul>
           </li>
           
           <li>
                <ul>
-                 <li><a href="">By Date</a></li>
-                 <li><a href="#schedule/22-12-2016">22/12/2016</a></li>
-                 <li><a href="#schedule/29-12-2016">29/12/2016</a></li>
-                 <li><a href="#schedule/08-01-2017">08/01/2017</a></li>
-                 <li><a href="#schedule/15-01-2017">15/01/2017</a></li>
-                 <li><a href="#schedule/22-01-2017">22/01/2017</a></li>
+                 <li>By Date</li>
+                 <li><a href="22-12-2016">22/12/2016</a></li>
+                 <li><a href="29-12-2016">29/12/2016</a></li>
+                 <li><a href="08-01-2017">08/01/2017</a></li>
+                 <li><a href="15-01-2017">15/01/2017</a></li>
+                 <li><a href="22-01-2017">22/01/2017</a></li>
               </ul>
           <li>
-            <a href="#schedule/all">View All</a>
+            <a href="all">View All</a>
           </li>
         </ul>
       </section>
+-->
   </div>
   
   
@@ -60,10 +60,10 @@
       </header>
         <ul>
           <li>
-          <button value="matchId">F.C. Steinburg - F.C. Volldamm </button>
+          <a href="#schedule/matchId">F.C. Steinburg - F.C. Volldamm </a>
           </li>
           <li>
-          <button value="matchId">F.C. Schultenbrau - F.C. Paulaner</button>
+          <a href="#schedule/matchId">F.C. Schultenbrau - F.C. Paulaner</a>
           </li>
         </ul>
     </section>
@@ -74,10 +74,10 @@
       </div>
       <ul>
           <li>
-            <button value="matchId">F.C. Steinburg - F.C. Volldamm </button>
+            <a href="#schedule/matchId">F.C. Steinburg - F.C. Volldamm</a>
           </li>
           <li>
-            <button value="matchId">F.C. Schultenbrau - F.C. Paulaner</button>
+            <a href="#schedule/matchId">F.C. Schultenbrau - F.C. Paulaner</a>
           </li>
       </ul>
     </section>
@@ -102,7 +102,19 @@
   </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
   <script src="assets/scripts/main.js"></script>
+  <script src="assets/scripts/template_function.js"></script>
+  <script src="assets/scripts/matches.js"></script>
+  
+  <script> 
+  console.log("hello");
+    $(function() {
+        $.get("assets/templates/schedule_filter_template.html", function(template){
+          renderTemplate(template, leagueData, "#filter-menu" );
+        })
+    });
+  </script>
 </body>
   
 </html>

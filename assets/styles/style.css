@@ -56,6 +56,8 @@ h1 {
   a.right-side{
     text-align: right;
   }
+  
+
 
 .main-content, #right-panel, #left-panel {
   text-align: center;
@@ -141,6 +143,8 @@ footer {
   padding-bottom:15px;
 }
 
+/*+++  filter menu styles +++*/
+
 #filter-menu{
     top: 60px;
     z-index: 999;
@@ -149,6 +153,15 @@ footer {
     height: 100%;
     width:100%;
     display:none;
+}
+
+#filter-menu a {
+   color:white;
+   text-decoration: none;
+}
+
+#filter-menu h1,li {
+    color:white;
 }
 
 #close-button {
