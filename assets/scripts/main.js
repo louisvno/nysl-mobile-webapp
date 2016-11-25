@@ -1,4 +1,5 @@
-console.log("current state =" + history.state);
+ //+++++++++++++++++++++++++++++++++++++++++\\
+//++ functions that respond to user action ++\\
 
 $('#filter-button').on("click",toggleFilterMenu);
 
@@ -9,9 +10,7 @@ function toggleFilterMenu() {
 function closeFilterMenu() {
     $('#filter-menu').hide();
 }
- //+++++++++++++++++++++++++++++++++++++++++\\
-//++ functions that respond to user action ++\\
-
+ 
 //When user clicks on a filter in the schedulefilter menu
 function setFilterMenuEvents () { 
     $('#filter-menu').find("a").on("click", function(event) {
@@ -27,81 +26,106 @@ function setFilterMenuEvents () {
 
 //When user uses back or forward button in browser ("pop state")
 $(window).on('popstate', function (event) {
-    console.log("current state =" + history.state);
 //    var parsedUrl = getUrl().split("/").pop().replace("%20"," ");
     var state = event.originalEvent.state;
     if (state) {
         updatePageContent( state.selectedTeam );
     } else {updatePageContent ()}
-    console.log("current state =" + history.state);
 });
 
-//When user clicks on a match in the schedule (gamecard)
+//When user clicks on a match in the schedule (gamecard), loaded after schedule is rendered
 function setGameCardEvents () { 
-    console.log("events added")
     $('.game-card').find('a').on("click", function (event) {
          var href = $(this).attr("href");
          event.preventDefault();
-         console.log("click");
          renderGameDetails (href);
     });
 };
 
-//upon page load (optional as in principal users start on first page)
+ //++++  Page Render functions  ++++\\
+//+++++++++++++++++++++++++++++++++++\\
 
 //update pagecontent according to state
 function updatePageContent (state) { 
     renderSchedule(state);
 }
 
-//render schedule filtered by team
+//render schedule filtered by team takes an array of matches
 function renderSchedule (teamname) { 
+    var template = "/assets/templates/schedule_card_template.html";
+    var content;
+    
     if (teamname) { 
-        var content = filterByTeam(teamname);
-        var template = "/assets/templates/schedule_card_template.html";
-
-        $.get(template, function (template) {
-            renderTemplate(template, content, "#left-panel" );
-            setGameCardEvents();
-        });
+        content = filterByTeam(teamname);
     } else { 
-        //TODO show all matches  or upcoming match whatever
-    };
+        content = getUpcomingMatches();
+    }
+    
+    $.get(template, function (template) {
+        renderTemplate(template, content, "#left-panel" );
+        setGameCardEvents();
+    });
 }
-      
+
+//Render game details page
 function renderGameDetails (matchId) {
    var content = getMatchData(matchId);
+   console.log(content);
    var template = "/assets/templates/gamedetail_card_template.html";
    
    $.get(template, function (template) {
       renderTemplate(template, content, "#right-panel" );
    });
 };
-      
+
+//+++++++++++++++
+
+
 //getURL console.log(location.pathname)
 function getUrl () {
     return location.pathname;
 }
 
-//function to change the history state
+//Change the browser history state
 function doPushState (href) {
     var url = href; //  /schedule/ +
     var state = {selectedTeam : href};
     history.pushState(state, null,url);
 }
 
-//Function to get the matches of the selected team from the leagueData object 
-function filterByTeam (value) {
-    var filteredData = leagueData.matches.filter( function (i) {
-        return i.hometeam === value || i.awayteam === value;
+//Get the matches of the selected team from the leagueData object 
+function filterByTeam (name) {
+    var filteredData = leagueData.matches.filter( function (match) {
+        return match.hometeam === name || match.awayteam === name;
     });
     return filteredData;
 }
 
-//TODO [x] get data of a match by match id
+//Get data object of one match by its match id
 function getMatchData(matchId) {
-    var matchData = leagueData.matches.filter (function (i){
-        return i.matchId === matchId;
+    var matchData = leagueData.matches.filter (function (match){
+        return match.matchId === matchId;
     })
-    return matchData;
+    return matchData.pop();
+}
+
+var d = Date.parseExact("20-11-2016","d-M-yyyy");
+var d2 = Date.today().clearTime();
+console.log(d);
+console.log(d2);
+console.log(d.isBefore(d2));
+
+
+//TODO check which date is today, check what is the first upcoming match date, get those match iDs
+function getUpcomingMatches () {
+    var today = new Date.today().clearTime();
+    var filteredData = leagueData.matches.filter (function (match){
+        //get matchdate and convert date string into Date object
+        var date = new Date.parseExact(match.date, "d-M-yyyy");
+        console.log(date);
+        //Check if date is today or in future
+        return date.equals(today) || date.isAfter(today);
+    });
+    
+    return filteredData;
 }
