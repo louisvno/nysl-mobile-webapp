@@ -1,26 +1,9 @@
-   <section id="find-matches">
-    <h1>View</h1>
-    <ul>
-      <li>
-         <ul>
-             <li>By team</li>
-             {{#teams}}
-               <li><a href="{{teamname}}">{{teamname}}</a></li>
-             {{/teams}}
-        </ul>
-      </li>
-
-<!--
-      <li>
-           <ul>
-             <li>By Date</li>
-             {{#allMatches}}
-               <li><a href="{{date}}">22/12/2016</a></li>
-             {{/allMatches}}
-          </ul>
-      <li>
-        <a href="all">View All</a>
-      </li>
--->
+ <section id="find-matches">
+  <h1>Filter</h1>
+     <ul>
+       <li>By team</li>
+       {{#teams}}
+         <li><a href="{{teamname}}">{{teamname}}</a></li>
+       {{/teams}}
     </ul>
-  </section>
+</section>
