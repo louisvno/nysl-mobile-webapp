@@ -1,16 +1,14 @@
  //+++++++++++++++++++++++++++++++++++++++++\\
 //++ functions that respond to user action ++\\
 
-$('#filter-button').on("click",toggleFilterMenu);
+//when user clicks on the search icon
+$('#filter-button').on("click", openFilterMenu);
 
-function toggleFilterMenu() {
-    $('#filter-menu').toggle();
+function openFilterMenu() {
+    $('#filter-menu').show();
+    showCloseButton("#filter-menu");
 }
 
-function closeFilterMenu() {
-    $('#filter-menu').hide();
-}
- 
 //When user clicks on a filter in the schedulefilter menu
 function setFilterMenuEvents () { 
     $('#filter-menu').find("a").on("click", function(event) {
@@ -19,9 +17,15 @@ function setFilterMenuEvents () {
         event.preventDefault();
         //instead, do the following things
         closeFilterMenu();
+        showFilterButton();
         doPushState(teamName);
         renderSchedule(teamName);
+        renderGameDetailsEmpty();
     });
+}
+
+function closeFilterMenu() {
+    $('#filter-menu').hide();
 }
 
 //When user uses back or forward button in browser ("pop state")
@@ -60,7 +64,6 @@ function setGameCardEvents () {
  //++++  Page Render functions  ++++\\
 //+++++++++++++++++++++++++++++++++++\\
 
-//render schedule filtered by team takes an array of matches
 function renderSchedule (teamname) { 
     var template = "/assets/templates/schedule_card_template.html";
     var content;
@@ -77,7 +80,6 @@ function renderSchedule (teamname) {
     });
 }
 
-//Render game details page
 function renderGameDetails (matchId) {
    var content = getMatchData(matchId);
    var template = "/assets/templates/gamedetail_card_template.html";
@@ -86,10 +88,7 @@ function renderGameDetails (matchId) {
       renderTemplate(template, content, "#right-panel" );
        if (isPortraitMode) {
            $('#right-panel').show();
-           $('#filter-button').on("click",function (){
-              $('#right-panel').hide();
-           });
-           //TODO change toggle filter event
+           closeGameDetails();
        }
    });
 };
@@ -99,6 +98,35 @@ function renderGameDetailsEmpty () {
    var template = "/assets/templates/game_detail_empty.html";
    $("#right-panel").load(template);
 }
+
+//+++++++Button functions+++++++++++++++++\\
+//++++++++++++++++++++++++++++++++++++++++\\
+
+function showFilterButton (){
+    $("#close-button").fadeOut(200, function(){
+        $("#filter-button").show();
+    });
+    
+}
+
+function showCloseButton (target) {
+    var $closeButton = $("#close-button");
+    $("#filter-button").hide();
+    $closeButton.fadeIn(200);
+    
+    $closeButton.on("click", function (){
+        $(target).hide();
+        showFilterButton();
+    })
+}
+
+function closeGameDetails (){ 
+    $('#close-button').on("click",function (){
+      $('#right-panel').hide();
+    });
+}
+
+//+++++ Manipulating the browser history ++++ \\
 
 
 //getURL console.log(location.pathname)
@@ -122,6 +150,9 @@ function doPushState (teamName, matchId) {
     
     history.pushState(state, null,url);
 }
+
+//++++++++++++++ Data filtering functions ++++++++++++++++\\
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++\\
 
 //Get the matches of the selected team from the leagueData object 
 function filterByTeam (name) {
