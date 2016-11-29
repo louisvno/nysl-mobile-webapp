@@ -13,6 +13,19 @@
   <link rel="icon" type="img/png" sizes="76x76" href="assets/images/homescreen-icons/nysl-icon-76x76.png">
   <link rel="icon" type="img/png" sizes="96x96" href="assets/images/homescreen-icons/nysl-icon-96x96.png">
   <link rel="icon" type="img/png" sizes="192x192" href="assets/images/homescreen-icons/nysl-icon-192x192.png">
+  
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAMYkQqcR_TCHuTJ3Ielyg-1VNsskgr0u4",
+      authDomain: "nyslmobile.firebaseapp.com",
+      databaseURL: "https://nyslmobile.firebaseio.com",
+      storageBucket: "nyslmobile.appspot.com",
+      messagingSenderId: "767452966590"
+    };
+    firebase.initializeApp(config);
+  </script>
 </head>
 
 <body>
@@ -36,8 +49,7 @@
   
   <div id="right-panel">
   <!-- filled by gamedetail_card_template -->  
-     <h3 class="details-placeholder">select a game to view details</h3>
-    
+    <h3 class="details-placeholder">select a game to view details</h3>
   </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

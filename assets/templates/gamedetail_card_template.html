@@ -1,13 +1,49 @@
 <section class="game-card">
-      <header class="game-card-header">
-        <h3>{{hometeam}} - {{awayteam}}</h3>
+  
+  <section class="details">
+    <header class="game-card-header">
+      <h3>{{hometeam}} - {{awayteam}}</h3>
+    </header>
+    <ul class="game-details">
+      <li>Date: {{date}}</li>
+      <li>Match start: {{time}}</li>
+      <li>Location: {{location}}</li>
+    </ul>
+  </section>
+  
+  <section class="location-map">
+    <header class="game-card-header grey">
+        <h3>Show Map</h3>
+    </header>
+    <div id="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11972.865782886653!2d2.15484835!3d41.3911056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a291baef8eef%3A0x57ed6ec0724e2cbc!2zUHJvdmVuw6dh!5e0!3m2!1sen!2ses!4v1479723634888" width="100%" height="400px" frameborder="0" style="border:0"></iframe>
+    </div>
+  </section>
+  
+  <section class="message-board">
+   
+    <section class ="messages">
+      <header class="game-card-header grey">
+        <h3>Messages</h3>
       </header>
-      <ul class="game-details">
-        <li>Date: {{date}}</li>
-        <li>Match start: {{time}}</li>
-        <li>Location: {{location}}</li>
-      </ul>
-      <div id="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11972.865782886653!2d2.15484835!3d41.3911056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a291baef8eef%3A0x57ed6ec0724e2cbc!2zUHJvdmVuw6dh!5e0!3m2!1sen!2ses!4v1479723634888" width="100%" height="400px" frameborder="0" style="border:0"></iframe>
+
+      <div id="messages-container">
+        <!-- filled by mustache messageboard template -->
       </div>
+    </section>
+    
+    <section class="new-message">
+      <header class="game-card-header grey">
+        <h3>New Message</h3>
+      </header>
+
+      <form action="#" id="submit-message">
+        <label>Name: <input type="text" id="author-name"></label>
+        <label>Message:<textarea rows="4" cols="40" id="message-body"></textarea></label>
+        <button id="send-message">send</button>
+      </form>
+    </section>  
+    
+  </section>
 </section>
+

@@ -111,6 +111,8 @@ function renderGameDetails (matchId) {
        } else {
             $('#right-panel').show();
        }
+       initSendMessage();
+       getPosts();
    });
 };
 
@@ -222,4 +224,41 @@ function gameDetails () {
     } else {
     return false;
     }
+}
+
+function initSendMessage() { 
+    var form = document.getElementById("submit-message");
+    var messageBody = document.getElementById("message-body");
+    var author = document.getElementById("author-name");
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        writeNewPost(messageBody.value,author.value,Date())
+    })
+}
+
+function writeNewPost(content,author,date) {
+    
+    var newPost = {
+        "author" : author,
+        "content" :content,
+        "timeStamp" : date
+    };
+    
+    var matchId = history.state.selectedMatch;
+    var postKey= firebase.database().ref().child("match-posts/matchId").push().key;
+    var update ={};
+    update[postKey] = newPost;
+    firebase.database().ref("match-posts/" + matchId).update(update);
+}
+
+function getPosts () {
+    var matchId = history.state.selectedMatch;
+    firebase.database().ref("match-posts/" + matchId).on("child_added",function (data){
+      var posts = data.val();
+      var template = "/assets/templates/message_board_template.html";
+   
+     $.get(template, function (template) {
+        appendTemplate(template,posts, "#messages-container" );
+     });
+   })
 }
