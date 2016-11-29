@@ -6,15 +6,17 @@ $('#filter-button').on("click", openFilterMenu);
 
 function openFilterMenu() {
     $('#filter-menu').show();
-    showCloseButton("#filter-menu");
+    showReturnButton("#filter-menu");
 }
 
 //When user clicks on a filter in the schedulefilter menu
 function setFilterMenuEvents () { 
     $('#filter-menu').find("a").on("click", function(event) {
         var teamName = $(this).attr("href");
+        
         //prevent default link behaviour
         event.preventDefault();
+        
         //instead, do the following things
         closeFilterMenu();
         showFilterButton();
@@ -24,11 +26,13 @@ function setFilterMenuEvents () {
     });
 }
 
+//close filter menu when user has clicked a filter
 function closeFilterMenu() {
     $('#filter-menu').hide();
 }
 
 //When user uses back or forward button in browser ("pop state")
+
 $(window).on('popstate', function (event) {
 //    var parsedUrl = getUrl().split("/").pop().replace("%20"," ");
     var state = event.originalEvent.state;
@@ -61,6 +65,21 @@ function setGameCardEvents () {
     });
 };
 
+//when user changes orientation of the device
+(function (){ 
+    var orientation = window.matchMedia('(orientation: portrait)');
+    orientation.addListener(function (){ 
+        if (isLandscapeMode()) { 
+            showFilterButton();
+            $('#right-panel').show();
+        } else if (isPortraitMode() && gameDetails()){
+            showReturnButton('#right-panel');
+        } else if (isPortraitMode() && !(gameDetails())){
+            $('#right-panel').hide();
+        }
+    })
+})();
+
  //++++  Page Render functions  ++++\\
 //+++++++++++++++++++++++++++++++++++\\
 
@@ -86,9 +105,11 @@ function renderGameDetails (matchId) {
    
    $.get(template, function (template) {
       renderTemplate(template, content, "#right-panel" );
-       if (isPortraitMode) {
+       if (isPortraitMode()) {
            $('#right-panel').show();
-           closeGameDetails();
+           showReturnButton('#right-panel');
+       } else {
+            $('#right-panel').show();
        }
    });
 };
@@ -97,37 +118,40 @@ function renderGameDetailsEmpty () {
    var content = "";
    var template = "/assets/templates/game_detail_empty.html";
    $("#right-panel").load(template);
+   
+   //TODO remove matchID from Url and update (replace?) state
 }
 
 //+++++++Button functions+++++++++++++++++\\
 //++++++++++++++++++++++++++++++++++++++++\\
 
 function showFilterButton (){
-    $("#close-button").fadeOut(200, function(){
+    $("#return-button").fadeOut(200, function(){
         $("#filter-button").show();
     });
     
 }
 
-function showCloseButton (target) {
-    var $closeButton = $("#close-button");
-    $("#filter-button").hide();
-    $closeButton.fadeIn(200);
+function showReturnButton (target) {
     
-    $closeButton.on("click", function (){
+    var $returnButton = $("#return-button");
+    $returnButton.off(); 
+    $("#filter-button").hide();
+    $returnButton.fadeIn(200);
+    
+    $returnButton.on("click", function (){
         $(target).hide();
+        if (target === "#right-panel" && isPortraitMode()){
+            renderGameDetailsEmpty();
+        }
         showFilterButton();
     })
 }
 
-function closeGameDetails (){ 
-    $('#close-button').on("click",function (){
-      $('#right-panel').hide();
-    });
-}
+
 
 //+++++ Manipulating the browser history ++++ \\
-
+//+++++++++++++++++++++++++++++++++++++++++++++\\
 
 //getURL console.log(location.pathname)
 function getUrl () {
@@ -142,7 +166,6 @@ function doPushState (teamName, matchId) {
     } else {
       url = "/" + (teamName || matchId);
     }
-    
     var state = {
       selectedTeam : teamName || "",
       selectedMatch : matchId || "",
@@ -185,9 +208,18 @@ function getUpcomingMatches () {
 
 //check device orientation
 function isPortraitMode (){ 
-    return window.matchMedia("(orientation: portrait)").matches
+    return window.matchMedia("(orientation: portrait)").matches;
 }
 
 function isLandscapeMode (){ 
     return window.matchMedia("(orientation: landscape)").matches;
+}
+
+function gameDetails () {
+    var check = document.getElementsByClassName("game-details");
+    if (check.length > 0) {
+        return true;
+    } else {
+    return false;
+    }
 }
