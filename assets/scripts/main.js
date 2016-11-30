@@ -111,8 +111,11 @@ function renderGameDetails (matchId) {
        } else {
             $('#right-panel').show();
        }
+       initApp();
        initSendMessage();
        getPosts();
+       setSignUp();
+       setLogin();
    });
 };
 
@@ -226,31 +229,46 @@ function gameDetails () {
     }
 }
 
+//+++++++++Message functions +++++++++++\\
+//++++++++++++++++++++++++++++++++++++++++\\
+
+
 function initSendMessage() { 
     var form = document.getElementById("submit-message");
     var messageBody = document.getElementById("message-body");
-    var author = document.getElementById("author-name");
+    
     form.addEventListener("submit", function(e) {
         e.preventDefault();
-        writeNewPost(messageBody.value,author.value,Date())
+        writeNewPost(messageBody.value, Date());
+        // clear textfield
+        e.target[0].value = "";
     })
 }
 
-function writeNewPost(content,author,date) {
+//write a new post to the firebase database
+function writeNewPost(content,date) {
+    var userId = firebase.auth().currentUser.uid;
     
-    var newPost = {
-        "author" : author,
-        "content" :content,
-        "timeStamp" : date
-    };
-    
-    var matchId = history.state.selectedMatch;
-    var postKey= firebase.database().ref().child("match-posts/matchId").push().key;
-    var update ={};
-    update[postKey] = newPost;
-    firebase.database().ref("match-posts/" + matchId).update(update);
+    firebase.database().ref('/users/' + userId).once('value').then(
+        function(userData){
+            var username = userData.val().username;
+        
+            var newPost = {
+                "author" : username,
+                "content" :content,
+                "timeStamp" : date
+            };
+            //write data 
+            //NOTE could make separate function for this
+            var matchId = history.state.selectedMatch;
+            var postKey= firebase.database().ref().child("match-posts/" + matchId).push().key;
+            var update ={};
+            update[postKey] = newPost;
+            firebase.database().ref("match-posts/" + matchId).update(update);
+    });
 }
 
+//retrieve posts from the firebase database
 function getPosts () {
     var matchId = history.state.selectedMatch;
     firebase.database().ref("match-posts/" + matchId).on("child_added",function (data){
@@ -262,3 +280,104 @@ function getPosts () {
      });
    })
 }
+
+
+
+//+++++++++++++++ Account functions +++++++++++\\
+//++++++++++++++++++++++++++++++++++++++++++++++\\
+
+//sign up page
+function signUpNewUser (email,password,username) { 
+  var profile = {};
+  firebase.auth().createUserWithEmailAndPassword(email, password).then( function (){ 
+            var uid = firebase.auth().currentUser.uid;
+            profile.username = username;
+            profile.email = email;
+            writeUserInfo(uid,profile);
+        });
+      //.catch(function(error) {
+        // Handle Errors here.
+    //    var errorCode = error.code;
+    //    var errorMessage = error.message;
+    //    // ...
+    //  });
+}
+
+function writeUserInfo(uid , profile) {
+    firebase.database().ref("users/" + uid).update(profile);
+};
+
+function loginUser (email,password){
+    console.log(email);
+    firebase.auth().signInWithEmailAndPassword(email, password);
+    //.catch(function(error) {
+      // Handle Errors here.
+    //  var errorCode = error.code;
+    //  var errorMessage = error.message;
+    //  // ...
+    //});
+}
+
+function setSignUp (){
+    var form = document.getElementById("sign-up-form");
+  
+    form.addEventListener("submit",function(e){
+        e.preventDefault();
+        var username = e.target[0].value;
+        var email = e.target[1].value;
+        var password =e.target[2].value;
+        
+        signUpNewUser(email,password,username);
+    })
+}
+
+//set login event function
+function setLogin (){
+    var form = document.getElementById("sign-in-form");
+    var info = {};
+  
+    form.addEventListener("submit",function(e){
+        e.preventDefault();
+        info.email = e.target[0].value;
+        info.password = e.target[1].value;
+        console.log("thid")
+        loginUser(info.email,info.password);
+    })
+}
+
+//Initialize the app depending if user is signed in or not
+function initApp() {
+  console.log("listening for sign in sign out")
+  
+  $('#no-account').on("click", function (e){
+    e.preventDefault();
+    $('#sign-up').show();
+  })
+  
+  //if auth state changes and user is defined means login succeeded else user is not logged in
+  firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          //user is signed in
+          console.log("user signed in")
+          setSignedInView();
+      } else {
+          console.log("user signed out")
+          setSignedOutView();
+      }
+  })
+}
+
+//set view if user logged in
+function setSignedInView () {
+    $('#sign-up').hide();
+    $('#sign-in').hide();
+    $('#submit-message').show();
+}
+
+//set view for user
+function setSignedOutView () {
+    $('#sign-in').show();
+    $('#sign-up').hide();
+    $('#submit-message').hide();
+}
+
