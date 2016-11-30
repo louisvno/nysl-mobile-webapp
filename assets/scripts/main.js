@@ -247,8 +247,11 @@ function initSendMessage() {
 
 //write a new post to the firebase database
 function writeNewPost(content,date) {
-    var userId = firebase.auth().currentUser.uid;
+    var user = firebase.auth().currentUser;
     
+    if (user) { 
+    var userId = user.uid;
+    //get username from database once, to diplay with messages
     firebase.database().ref('/users/' + userId).once('value').then(
         function(userData){
             var username = userData.val().username;
@@ -266,6 +269,9 @@ function writeNewPost(content,date) {
             update[postKey] = newPost;
             firebase.database().ref("match-posts/" + matchId).update(update);
     });
+    } else {
+        window.alert("login to send a message")
+    }
 }
 
 //retrieve posts from the firebase database

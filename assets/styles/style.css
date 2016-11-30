@@ -112,6 +112,10 @@ h1 {
   color: #033949;
 }
 
+.game-card:last-child{ 
+  margin-bottom: 15px;
+}
+
 .game-details {
   text-align: left;
 }
@@ -134,7 +138,7 @@ footer {
   padding-bottom:15px;
 }
 
-/*+++  filter menu styles +++*/
+/*+++ start filter menu styles +++*/
 
 #filter-menu{
     top: 60px;
@@ -167,6 +171,8 @@ footer {
     display:none;
 }
 
+/*start message styles*/
+
 .message {
 /*    background-color: rgba(3,57,73,0.3);*/
     text-align: left;
@@ -176,11 +182,20 @@ footer {
 .message ul{ 
 display:inline-block;
 width: 22%;
-}.message p{ 
+}
+
+.message p{ 
 margin: 15px;
 display:inline-block;
 vertical-align: top;
 }
+
+button {
+    width:50%;
+    height: 30px;
+    border-radius: 5px;
+}
+
 .small-text {
     font-size: 10px;
 }
@@ -190,6 +205,14 @@ vertical-align: top;
 #messages-container {
   max-height: 400px;
   overflow-y: auto;
+}
+
+label {
+  color: #033949;
+}
+
+section#sign-in input{
+  text-align: left;
 }
 
 @media screen and (orientation:landscape) {
