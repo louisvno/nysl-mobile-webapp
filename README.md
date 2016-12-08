@@ -1,7 +1,9 @@
 # nysl-mobile-webapp
-Mobile website that behaves like a native app when added to homescreen
+Single page mobile website that behaves like a native app when added to homescreen
 
-Uses Mustache to render the views in accordance with the app state
+Uses Mustache to render the views in accordance with the app state. 
+AJAX requests are used to retrieve the data and the view templates themselves.
+By using AJAX the page content can change without reloading the page making it a single page app. 
 
-Uses History.state object to manipulate the browser history to create the page URLs.
-AJAX requests are used to retreive the data and the view tempalates.
+The app also uses History.state object to manipulate the browser history to create the different page URLs.
+Firebase was used as a backend and a URL rewrite redirects all requests to index.html (as it is the only static html resource).
