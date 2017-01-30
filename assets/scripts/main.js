@@ -1,12 +1,44 @@
  //+++++++++++++++++++++++++++++++++++++++++\\
 //++ functions that respond to user action ++\\
 
+//TODO make controller
+
+function viewController(){
+    //get url
+    var pathname = window.location.pathname;
+    //hide everything in the view
+    // clearAll();
+    //parse url
+    var pathItems = pathname.split("/");
+    switch(pathItems.length){
+      case 1 :
+          //renderhomepage
+      case 2 :
+          //dispatcher
+      
+      case 3 :
+        //dispatcher
+    
+    }
+    var matchId= pathItems[1];
+    var teamName = pathItems[0].replace("%20"," ");
+    //show what is needed based on url
+    //TODO create matches/home/teams etc
+    renderSchedule(teamName);
+    renderGameDetails(matchId);
+    
+    setFilterMenuEvents();
+    
+    showFilterButton();
+}
+
+
 //when user clicks on the search icon
 $('#filter-button').on("click", openFilterMenu);
 
 function openFilterMenu() {
     $('#filter-menu').show();
-    showReturnButton("#filter-menu");
+    showFilterReturnButton("#filter-menu");
 }
 
 //When user clicks on a filter in the schedulefilter menu
@@ -61,24 +93,9 @@ function setGameCardEvents () {
            } else {
              doPushState(null,matchId);
            }
-         renderGameDetails (matchId); //async
+         viewController(); //async
     });
 };
-
-//when user changes orientation of the device
-(function (){ 
-    var orientation = window.matchMedia('(orientation: portrait)');
-    orientation.addListener(function (){ 
-        if (isLandscapeMode()) { 
-            showFilterButton();
-            $('#right-panel').show();
-        } else if (isPortraitMode() && gameDetails()){
-            showReturnButton('#right-panel');
-        } else if (isPortraitMode() && !(gameDetails())){
-            $('#right-panel').hide();
-        }
-    })
-})();
 
  //++++  Page Render functions  ++++\\
 //+++++++++++++++++++++++++++++++++++\\
@@ -86,8 +103,8 @@ function setGameCardEvents () {
 function renderSchedule (teamname) { 
     var template = "/assets/templates/schedule_card_template.html";
     var content;
-    
-    if (teamname) { 
+    //TODO add all option and add link
+    if (teamname && teamname != "all") { 
         content = filterByTeam(teamname);
     } else { 
         content = getUpcomingMatches();
@@ -100,23 +117,22 @@ function renderSchedule (teamname) {
 }
 
 function renderGameDetails (matchId) {
+   if(matchId) { 
    var content = getMatchData(matchId);
    var template = "/assets/templates/gamedetail_card_template.html";
    
    $.get(template, function (template) {
       renderTemplate(template, content, "#right-panel" );
-       if (isPortraitMode()) {
-           $('#right-panel').show();
-           showReturnButton('#right-panel');
-       } else {
-            $('#right-panel').show();
-       }
+      //TODO extract part below
        initApp();
        initSendMessage();
        getPosts();
        setSignUp();
        setLogin();
+       $('#left-panel').hide();
+      // showReturnButton();
    });
+  }
 };
 
 function renderGameDetailsEmpty () {
@@ -130,27 +146,31 @@ function renderGameDetailsEmpty () {
 //+++++++Button functions+++++++++++++++++\\
 //++++++++++++++++++++++++++++++++++++++++\\
 
-function showFilterButton (){
-    $("#return-button").fadeOut(200, function(){
-        $("#filter-button").show();
-    });
-    
+function setButtonEvents(){ 
+  var $closeMatchButton = $("#close-match-button");
+  var $closeFilterButton = $("#close-filter-button");
+  var $closeMatchButton = $("#close-match-button");
+  
+  $closeMatchButton.on("click", function (){
+          window.history.back();
+          //TODO call to controller should be here with new url
+          viewController();
+      })
 }
 
-function showReturnButton (target) {
-    
-    var $returnButton = $("#return-button");
-    $returnButton.off(); 
-    $("#filter-button").hide();
-    $returnButton.fadeIn(200);
-    
-    $returnButton.on("click", function (){
-        $(target).hide();
-        if (target === "#right-panel" && isPortraitMode()){
-            renderGameDetailsEmpty();
-        }
-        showFilterButton();
-    })
+function showFilterButton (){
+    $("#filter-button").show();
+}
+
+//TODO hide all, show needed basis
+function showMatchCloseButton () {
+    $("#close-match-button").fadeIn(200);   
+}
+
+function showFilterCloseButton () {
+    var $button = $("#close-filter-button");
+   //TODO for example hide all buttons
+    $button.fadeIn(200);
 }
 
 
@@ -198,7 +218,6 @@ function getMatchData(matchId) {
     return matchData.pop();
 }
 
-
 //get todays date, check for every game in the database if is today or in the future, return only these
 function getUpcomingMatches () {
     var today = new Date.today().clearTime();
@@ -211,23 +230,6 @@ function getUpcomingMatches () {
     return filteredData;
 }
 
-//check device orientation
-function isPortraitMode (){ 
-    return window.matchMedia("(orientation: portrait)").matches;
-}
-
-function isLandscapeMode (){ 
-    return window.matchMedia("(orientation: landscape)").matches;
-}
-
-function gameDetails () {
-    var check = document.getElementsByClassName("game-details");
-    if (check.length > 0) {
-        return true;
-    } else {
-    return false;
-    }
-}
 
 //+++++++++Message functions +++++++++++\\
 //++++++++++++++++++++++++++++++++++++++++\\
@@ -299,7 +301,7 @@ function signUpNewUser (email,password,username) {
             var uid = firebase.auth().currentUser.uid;
             profile.username = username;
             profile.email = email;
-            writeUserInfo(uid,profile);
+            writeUserInfoToDatabase(uid,profile);
         });
       //.catch(function(error) {
         // Handle Errors here.
@@ -309,7 +311,7 @@ function signUpNewUser (email,password,username) {
     //  });
 }
 
-function writeUserInfo(uid , profile) {
+function writeUserInfoToDatabase(uid , profile) {
     firebase.database().ref("users/" + uid).update(profile);
 };
 
@@ -377,13 +379,13 @@ function initApp() {
 function setSignedInView () {
     $('#sign-up').hide();
     $('#sign-in').hide();
-    $('#submit-message').show();
+    $('#new-message').show();
 }
 
 //set view for user
 function setSignedOutView () {
     $('#sign-in').show();
     $('#sign-up').hide();
-    $('#submit-message').hide();
+    $('#new-message').hide();
 }
 

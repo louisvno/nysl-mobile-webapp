@@ -5,91 +5,74 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NYSL App</title>
-  <link rel="stylesheet" href="/assets/styles/reset.css">
-  <link rel="stylesheet" href="/assets/styles/style.css">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>NYSL</title>
+  <link rel="stylesheet" href="assets/styles/reset.css">
+  <link rel="stylesheet" href="assets/styles/style.css">
   <link rel="icon" type="img/png" sizes="48x48" href="assets/images/homescreen-icons/nysl-icon-48x48.png">
   <link rel="icon" type="img/png" sizes="76x76" href="assets/images/homescreen-icons/nysl-icon-76x76.png">
   <link rel="icon" type="img/png" sizes="96x96" href="assets/images/homescreen-icons/nysl-icon-96x96.png">
   <link rel="icon" type="img/png" sizes="192x192" href="assets/images/homescreen-icons/nysl-icon-192x192.png">
+  
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAMYkQqcR_TCHuTJ3Ielyg-1VNsskgr0u4",
+      authDomain: "nyslmobile.firebaseapp.com",
+      databaseURL: "https://nyslmobile.firebaseio.com",
+      storageBucket: "nyslmobile.appspot.com",
+      messagingSenderId: "767452966590"
+    };
+    firebase.initializeApp(config);
+  </script>
 </head>
 
 <body>
-
   <header class="page-header">
     <div class="header-wrapper">
-      <div class="align-item"></div>
-      <h1>NYSL</h1>
+<!--      <a href="index.html" id="back-button" ><img src="assets/images/return-no-tail-3px.svg"></a>-->
+      <span  id="return-button" ><img src="assets/images/return_button_sm.svg"></span>
+      <span  id="filter-button"><img src="assets/images/mag_glass_button.svg"></span>
+      <h1>Schedule</h1>
       <div class="align-item"></div>
     </div>
   </header>
   
-  <section class="main-content">
-   
-    <img id="logo" alt="nysl logo" src="assets/images/nysl-logo-96x96.png">
-    <h1>Matches this weekend</h1>
-    
-    <section class="game-card">
-       <header class="game-card-header">
-        <h3>22-12-2016</h3>
-      </header>
-      <form action="game_details.html" method="get">
-        <ul>
-          <li>
-              <button name="match-code" value="20161">F.C. Steinburg - F.C. Voldamm</button>
-          </li>
-          <li>
-            <button name="match-code" value="20162">F.C. Schultenbrau - F.C. Paulaner</button>
-          </li>
-        </ul>
-      </form>
-    </section>
-    
-    <section class="find-matches">
-      <h1>View Schedule</h1>
-    
-        <ul>
-          <li>
-           <form action="select_results.html" method="get">
-              <select id="select-by-team" name="teamname">
-                <option value="" selected disabled>By Team</option>
-                <option value="f.c.paulaner">F.C. Paulaner</option>
-                <option value="f.c.schultenbrau">F.C. Schultenbrau</option>
-                <option value="f.c.steinburg">F.C. Steinburg</option>
-                <option value="f.c.volldamm">F.C. Voldamm</option>
-              </select>
-            </form>
-          </li>
-          
-          <li>
-           <form id="date-form" action="select_results.html"  method="get">
-              <select id="select-by-date" name="matchdate">
-                <option value="" selected disabled>By Date</option>
-                <option value="22/12/2016">22/12/2016</option>
-                <option value="29/12/2016">29/12/2016</option>
-                <option value="08/01/2017">08/01/2017</option>
-                <option value="15/01/2017">15/01/2017</option>
-                <option value="22/01/2017">22/01/2017</option>
-              </select>
-            </form>
-          </li>
-          <li>
-            <form action="select_results.html">
-              <button name="viewall" value="all">View all</button>
-            </form>
-<!--NOTE cannot put everything in one form as it causes conflicts-->
-          </li>
-        </ul>
-      </section>
-      
-      <footer>
-        <p>&copy;</p>
-      </footer>
-      
-  </section>
+  <div id="filter-menu">
+  <!--filled by schedule_filter_template template-->
+  </div>
+  
+  <div id="left-panel">
+  <!--filled by schedule_card_template -->
+  </div>
+  
+  <div id="right-panel">
+  <!-- filled by gamedetail_card_template -->  
+    <h3 class="details-placeholder">select a game to view details</h3>
+  </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+  <script src="assets/scripts/date.js"></script>
+  <script src="assets/scripts/template_function.js"></script>
+  <script src="assets/scripts/matches.js"></script>
   <script src="assets/scripts/main.js"></script>
+  
+  <script> 
+  //on document ready render the filter menu from the data with mustache
+    $(function() {
+        $.get("assets/templates/schedule_filter_template.html", function(template){
+            //render filter menu content
+            renderTemplate(template, leagueData, "#filter-menu" );
+            //render schedule with upcoming games
+            viewController();
+            renderSchedule();
+            //set up the filter menu
+            setFilterMenuEvents();
+        })
+    });
+  </script>
 </body>
   
 </html>

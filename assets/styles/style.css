@@ -63,13 +63,10 @@ h1 {
 }
 
 #right-panel {
-  display: none;
   width: 100%;
-  margin-top:0;
-  top: 60px;
-  height: calc(100% - 60px);
-  position: fixed;
-  overflow-y: scroll;
+  
+/*  height: calc(100% - 60px);*/
+ 
 }
 
 .details-placeholder {
@@ -167,7 +164,7 @@ footer {
     margin-top: 5px;
 }
 
-#return-button {
+#close-filter-button, #close-match-button, #show-filter-button {
     display:none;
 }
 
@@ -207,16 +204,43 @@ button {
   overflow-y: auto;
 }
 
+#message-body{
+  width:100%;
+}
+
 label {
   color: #033949;
 }
 
+textarea {
+ box-sizing: border-box;
+}
+.game-card input{
+    width:75%;
+    height: 30px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
 section#sign-in input{
   text-align: left;
 }
 
+section#sign-in {
+  margin-bottom:15px;
+}
+
+#no-account{
+ font-size: 12px;
+ text-decoration: underline;
+}
+
+.details-placeholder{
+   display:none;
+  }
+
 @media screen and (orientation:landscape) {
   #left-panel {
+    display:block !important;
     width:33.33%;
     margin-top:0;
     top:60px;
@@ -235,5 +259,8 @@ section#sign-in input{
     overflow-y: scroll;
     margin-left:33.33%;
   }
-  
+  .details-placeholder{
+   display:block;
+  }
+
 }

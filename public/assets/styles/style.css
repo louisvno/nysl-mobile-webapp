@@ -1,10 +1,14 @@
+html {
+  height: 100%;
+}
+
 body {
   font-family: arial;
   background-color: #e2e2e2;
-
+  min-height:100%
 }
 
-.game-card, ul, #map-container,.find-matches{
+.game-card, ul, #map-container,#find-matches{
   margin: 15px;
 }
 
@@ -17,7 +21,6 @@ h1 {
   max-width: 600px;
   min-height:60px;
   margin:auto;
-  box-sizing: border-box;
   padding: 0 15px 0 15px;
   display:flex;
   align-items: center;
@@ -25,7 +28,7 @@ h1 {
 }
 .page-header {
   background-color: #033949;
-  min-height: 60px;
+  height: 60px;
   position:fixed;
   top:0;
   width:100%;
@@ -53,22 +56,22 @@ h1 {
   a.right-side{
     text-align: right;
   }
-
-.main-content {
+  
+#right-panel, #left-panel {
   text-align: center;
-  min-height: 480px;
-  max-width: 600px;
-  margin:auto;
-  margin-top:60px;
-  padding-top: 15px;
-}
-.main-content h1 {
-  padding-top:15px;
+  margin-top:75px;
 }
 
-.main-content a{
-  display: block;
-  margin-top:15px;
+#right-panel {
+  width: 100%;
+  
+/*  height: calc(100% - 60px);*/
+ 
+}
+
+.details-placeholder {
+    margin-top: 35vh;
+    color: darkslategrey;
 }
 
 #logo {
@@ -92,20 +95,22 @@ h1 {
   border-radius: 10px;
 }
 
-  .game-card-header h3{
-    color:white;
-    padding: 8px 0px 8px 0 ;
-  }
+.grey{
+     background-color: darkgray;
+}
 
-  .game-card button{
-  /*  background-color: #afff4a;*/
-    margin-bottom: 5px;
-  }
+.game-card-header h3{
+  color:white;
+  padding: 8px 0px 8px 0 ;
+}
 
-#map-container{
-  height: 150px;
-  background-color: palegreen;
-  margin-bottom: 0px;
+.game-card a {
+  text-decoration: none;
+  color: #033949;
+}
+
+.game-card:last-child{ 
+  margin-bottom: 15px;
 }
 
 .game-details {
@@ -113,14 +118,8 @@ h1 {
 }
 
 .game-details li{
-  margin-bottom: 15px;
-}
-
-button {
-  width:100%;
-  height: 40px;
   font-size: 14px;
-  color:#033949;
+  margin-bottom: 5px;
 }
 
 select {
@@ -131,3 +130,136 @@ select {
 
 }
 
+footer {
+  padding-top: 15px;
+  padding-bottom:15px;
+}
+
+/*+++ start filter menu styles +++*/
+
+#filter-menu{
+    top: 60px;
+    z-index: 999;
+    background-color: rgba(3,57,73,1.0);
+    position:fixed;
+    height: 100%;
+    width:100%;
+    display:none;
+}
+#filter-menu ul{
+    margin:0px;
+}
+#filter-menu a {
+   color:white;
+   text-decoration: none;
+}
+
+#filter-menu h1{
+    color:white;
+}
+
+#filter-menu li{
+    color:white;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+#return-button {
+    display:none;
+}
+
+/*start message styles*/
+
+.message {
+/*    background-color: rgba(3,57,73,0.3);*/
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.message ul{ 
+display:inline-block;
+width: 22%;
+}
+
+.message p{ 
+margin: 15px;
+display:inline-block;
+vertical-align: top;
+}
+
+button {
+    width:50%;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.small-text {
+    font-size: 10px;
+}
+.bold-text {
+    font-weight: bold;
+}
+#messages-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#message-body{
+  width:100%;
+}
+
+label {
+  color: #033949;
+}
+
+textarea {
+ box-sizing: border-box;
+}
+.game-card input{
+    width:75%;
+    height: 30px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+section#sign-in input{
+  text-align: left;
+}
+
+section#sign-in {
+  margin-bottom:15px;
+}
+
+#no-account{
+ font-size: 12px;
+ text-decoration: underline;
+}
+
+.details-placeholder{
+   display:none;
+  }
+
+@media screen and (orientation:landscape) {
+  #left-panel {
+    display:block !important;
+    width:33.33%;
+    margin-top:0;
+    top:60px;
+    height:calc(100% - 60px);
+    position:fixed;
+    overflow-y:scroll;
+  }
+
+  #right-panel {
+    display:block;
+    width: 66.6666%;
+    margin-top:0;
+    top: 60px;
+    height: calc(100% - 60px);
+    position: fixed;
+    overflow-y: scroll;
+    margin-left:33.33%;
+  }
+  .details-placeholder{
+   display:block;
+  }
+}
